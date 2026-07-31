@@ -1,0 +1,302 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --radius: 0.75rem;
+
+  /* Light theme */
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.15 0.01 260);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.01 260);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.01 260);
+
+  --primary: oklch(0.58 0.21 265);
+  --primary-foreground: oklch(0.98 0 0);
+
+  --secondary: oklch(0.96 0.01 260);
+  --secondary-foreground: oklch(0.2 0.01 260);
+
+  --muted: oklch(0.96 0.01 260);
+  --muted-foreground: oklch(0.5 0.02 260);
+
+  --accent: oklch(0.7 0.18 165);
+  --accent-foreground: oklch(0.15 0.01 260);
+
+  --destructive: oklch(0.58 0.24 27);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --success: oklch(0.65 0.17 150);
+  --warning: oklch(0.78 0.16 85);
+
+  --border: oklch(0.9 0.01 260);
+  --input: oklch(0.9 0.01 260);
+  --ring: oklch(0.58 0.21 265);
+
+  --gradient-brand: linear-gradient(135deg, oklch(0.58 0.21 265), oklch(0.62 0.19 300));
+}
+
+.dark {
+  --background: oklch(0.13 0.015 260);
+  --foreground: oklch(0.96 0.005 260);
+
+  --card: oklch(0.17 0.015 260);
+  --card-foreground: oklch(0.96 0.005 260);
+
+  --popover: oklch(0.17 0.015 260);
+  --popover-foreground: oklch(0.96 0.005 260);
+
+  --primary: oklch(0.7 0.19 265);
+  --primary-foreground: oklch(0.13 0.015 260);
+
+  --secondary: oklch(0.23 0.015 260);
+  --secondary-foreground: oklch(0.96 0.005 260);
+
+  --muted: oklch(0.23 0.015 260);
+  --muted-foreground: oklch(0.65 0.02 260);
+
+  --accent: oklch(0.75 0.16 165);
+  --accent-foreground: oklch(0.13 0.015 260);
+
+  --destructive: oklch(0.65 0.22 27);
+  --destructive-foreground: oklch(0.13 0.015 260);
+
+  --success: oklch(0.72 0.16 150);
+  --warning: oklch(0.82 0.15 85);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.7 0.19 265);
+
+  --gradient-brand: linear-gradient(135deg, oklch(0.7 0.19 265), oklch(0.68 0.18 300));
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  ::selection {
+    @apply bg-primary/25 text-foreground;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism surface used for navbars, modals, floating panels */
+  .glass-panel {
+    @apply bg-card/60 backdrop-blur-xl border border-border/60;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+  }
+
+  /* Brand gradient text, used sparingly for hero headings / logo */
+  .text-gradient-brand {
+    background-image: var(--gradient-brand);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .bg-gradient-brand {
+    background-image: var(--gradient-brand);
+  }
+
+  /* Subtle grid background for hero / empty-state sections */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  /* 3D cube countdown loader — shown between quiz questions */
+  .quiz-cube-spinner-wrapper {
+    width: 56px;
+    height: 56px;
+    perspective: 800px;
+  }
+
+  .quiz-cube-spinner {
+    width: 100%;
+    height: 100%;
+    --clr: var(--color-primary);
+    animation: quiz-cube-spin 1.6s infinite ease;
+    transform-style: preserve-3d;
+    position: relative;
+  }
+
+  .quiz-cube-spinner > div {
+    background-color: transparent;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    border: 2.5px solid var(--clr);
+  }
+
+  .quiz-cube-spinner div:nth-of-type(1) {
+    transform: translateZ(-28px) rotateY(180deg);
+  }
+  .quiz-cube-spinner div:nth-of-type(2) {
+    transform: rotateY(-270deg) translateX(50%);
+    transform-origin: top right;
+  }
+  .quiz-cube-spinner div:nth-of-type(3) {
+    transform: rotateY(270deg) translateX(-50%);
+    transform-origin: center left;
+  }
+  .quiz-cube-spinner div:nth-of-type(4) {
+    transform: rotateX(90deg) translateY(-50%);
+    transform-origin: top center;
+  }
+  .quiz-cube-spinner div:nth-of-type(5) {
+    transform: rotateX(-90deg) translateY(50%);
+    transform-origin: bottom center;
+  }
+  .quiz-cube-spinner div:nth-of-type(6) {
+    transform: translateZ(28px);
+  }
+
+  @keyframes quiz-cube-spin {
+    0% {
+      transform: rotate(45deg) rotateX(-25deg) rotateY(25deg);
+    }
+    50% {
+      transform: rotate(45deg) rotateX(-385deg) rotateY(25deg);
+    }
+    100% {
+      transform: rotate(45deg) rotateX(-385deg) rotateY(385deg);
+    }
+  }
+
+  /* Rotating-earth "connecting" loader — scales via parent font-size (em-based) */
+  .earth-loader {
+    --watercolor: #3344c1;
+    width: 7.5em;
+    height: 7.5em;
+    background-color: var(--watercolor);
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow:
+      inset 0em 0.5em rgb(255 255 255 / 25%),
+      inset 0em -0.5em rgb(0 0 0 / 25%);
+    border: solid 0.15em white;
+    animation: earth-startround 1s;
+    animation-iteration-count: 1;
+  }
+
+  .earth-loader svg:nth-child(1) {
+    position: absolute;
+    bottom: -2em;
+    width: 7em;
+    height: auto;
+    animation: earth-round1 5s infinite linear 0.75s;
+  }
+  .earth-loader svg:nth-child(2) {
+    position: absolute;
+    top: -3em;
+    width: 7em;
+    height: auto;
+    animation: earth-round1 5s infinite linear;
+  }
+  .earth-loader svg:nth-child(3) {
+    position: absolute;
+    top: -2.5em;
+    width: 7em;
+    height: auto;
+    animation: earth-round2 5s infinite linear;
+  }
+  .earth-loader svg:nth-child(4) {
+    position: absolute;
+    bottom: -2.2em;
+    width: 7em;
+    height: auto;
+    animation: earth-round2 5s infinite linear 0.75s;
+  }
+
+  @keyframes earth-startround {
+    0% { filter: brightness(500%); box-shadow: none; }
+    75% { filter: brightness(500%); box-shadow: none; }
+    100% {
+      filter: brightness(100%);
+      box-shadow:
+        inset 0em 0.5em rgb(255 255 255 / 25%),
+        inset 0em -0.5em rgb(0 0 0 / 25%);
+    }
+  }
+
+  @keyframes earth-round1 {
+    0% { left: -2em; opacity: 100%; transform: skewX(0deg) rotate(0deg); }
+    30% { left: -6em; opacity: 100%; transform: skewX(-25deg) rotate(25deg); }
+    31% { left: -6em; opacity: 0%; transform: skewX(-25deg) rotate(25deg); }
+    35% { left: 7em; opacity: 0%; transform: skewX(25deg) rotate(-25deg); }
+    45% { left: 7em; opacity: 100%; transform: skewX(25deg) rotate(-25deg); }
+    100% { left: -2em; opacity: 100%; transform: skewX(0deg) rotate(0deg); }
+  }
+
+  @keyframes earth-round2 {
+    0% { left: 5em; opacity: 100%; transform: skewX(0deg) rotate(0deg); }
+    75% { left: -7em; opacity: 100%; transform: skewX(-25deg) rotate(25deg); }
+    76% { left: -7em; opacity: 0%; transform: skewX(-25deg) rotate(25deg); }
+    77% { left: 8em; opacity: 0%; transform: skewX(25deg) rotate(-25deg); }
+    80% { left: 8em; opacity: 100%; transform: skewX(25deg) rotate(-25deg); }
+    100% { left: 5em; opacity: 100%; transform: skewX(0deg) rotate(0deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+  .quiz-cube-spinner,
+  .earth-loader,
+  .earth-loader svg {
+    animation: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+}
