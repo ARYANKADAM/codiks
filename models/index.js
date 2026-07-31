@@ -10,3 +10,4 @@ export { Achievement } from "@/models/Achievement";
 export { Notification } from "@/models/Notification";
 export { QuizAttempt } from "@/models/QuizAttempt";
 export { MathAttempt } from "@/models/MathAttempt";
+export { CsQuizAttempt } from "@/models/CsQuizAttempt";

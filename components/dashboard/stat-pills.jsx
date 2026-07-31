@@ -1,5 +1,4 @@
 import { Swords, Flame } from "lucide-react";
-import { TierBadge } from "@/components/shared/tier-badge";
 
 function Pill({ icon: Icon, value, accent }) {
   return (
@@ -13,12 +12,11 @@ function Pill({ icon: Icon, value, accent }) {
   );
 }
 
-export function StatPills({ rating, winStreak, totalBattles }) {
+export function StatPills({ dailyStreak, totalDuels }) {
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <TierBadge rating={rating} size="md" />
-      <Pill icon={Flame} value={winStreak} accent="oklch(0.7 0.2 40)" />
-      <Pill icon={Swords} value={totalBattles} />
+      <Pill icon={Flame} value={dailyStreak} accent="oklch(0.7 0.2 40)" />
+      <Pill icon={Swords} value={totalDuels} />
     </div>
   );
 }

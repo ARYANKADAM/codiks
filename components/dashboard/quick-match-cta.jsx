@@ -1,6 +1,6 @@
 "use client";
 
-import { Swords, Sigma } from "lucide-react";
+import { BrainCircuit, Sigma } from "lucide-react";
 import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -9,11 +9,11 @@ import { useMatchmaking } from "@/hooks/use-matchmaking";
 import { SearchingOverlay } from "@/components/matchmaking/searching-overlay";
 
 const COPY = {
-  coding: {
-    title: "Ready to duel?",
-    description: "Get matched with an opponent near your rating.",
-    cta: "Find a match",
-    icon: Swords,
+  cs_quiz: {
+    title: "Ready to test your CS fundamentals?",
+    description: "Race an opponent through complexity, data structures & core concepts.",
+    cta: "Find a CS quiz duel",
+    icon: BrainCircuit,
   },
   math: {
     title: "Ready for a math sprint?",
@@ -23,10 +23,10 @@ const COPY = {
   },
 };
 
-export function QuickMatchCta({ mode = "coding" }) {
+export function QuickMatchCta({ mode = "cs_quiz" }) {
   const { user } = useUser();
   const { status, elapsedMs, joinQueue, leaveQueue } = useMatchmaking(user?.id);
-  const copy = COPY[mode] ?? COPY.coding;
+  const copy = COPY[mode] ?? COPY.cs_quiz;
   const Icon = copy.icon;
 
   return (

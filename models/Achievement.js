@@ -6,6 +6,7 @@ const achievementSchema = new Schema(
     title: { type: String, required: true },
     description: { type: String, required: true },
     icon: { type: String, default: "trophy" }, // lucide-react icon name
+    category: { type: String, enum: ["streak", "victory"], required: true },
 
     // Flexible criteria the achievement-check job evaluates against user.stats
     criteria: {

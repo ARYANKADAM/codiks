@@ -84,7 +84,7 @@ export function useMatchmaking(userId) {
         // rules, so without this call it lingers forever and re-triggers
         // this exact listener (and re-navigation) on every future mount.
         fetch("/api/matchmaking/clear-assignment", { method: "POST" }).catch(() => {});
-        const destination = assignment.mode === "math" ? "math-duel" : "battle";
+       const destination = assignment.mode === "math" ? "math-duel" : "coding-quiz";
         router.push(`/${destination}/${assignment.roomId}`);
       }
     });

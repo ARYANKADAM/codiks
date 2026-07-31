@@ -49,7 +49,14 @@ const userSchema = new Schema(
     stats: { type: userStatsSchema, default: () => ({}) },
     mathRating: { type: Number, default: 1200, index: true },
     mathStats: { type: userStatsSchema, default: () => ({}) },
+    csQuizRating: { type: Number, default: 1200, index: true },
+    dailyStreak: { type: Number, default: 0 },
+    bestDailyStreak: { type: Number, default: 0 },
+    lastStreakDate: { type: String, default: null }, // "YYYY-MM-DD" (UTC)
+    bannerUrl: { type: String, default: null }, // base64 data URI, client-compressed
+    csQuizStats: { type: userStatsSchema, default: () => ({}) },
     unlockedAchievements: { type: [unlockedAchievementSchema], default: [] },
+    showcasedAchievements: { type: [Schema.Types.ObjectId], ref: "Achievement", default: [] }, // max 8, enforced in the API route
     ratingHistory: { type: [ratingHistoryEntrySchema], default: [] },
 
     preferredLanguages: {

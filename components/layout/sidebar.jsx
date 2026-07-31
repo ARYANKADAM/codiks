@@ -62,7 +62,9 @@ function SidebarFooter({ isCollapsed, user }) {
       <div className="flex items-center gap-3 rounded-lg p-2 hover:bg-secondary/50">
         <UserButton afterSignOutUrl="/" appearance={{ elements: { avatarBox: "size-9" } }} />
         {!isCollapsed && (
-          <p className="truncate text-sm font-semibold">{user?.fullName || user?.username}</p>
+          <Link href="/dashboard/profile" className="min-w-0 flex-1 truncate text-sm font-semibold hover:underline">
+            {user?.fullName || user?.username}
+          </Link>
         )}
       </div>
     </div>

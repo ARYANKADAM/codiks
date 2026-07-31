@@ -10,16 +10,16 @@ export async function POST(req) {
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   const body = await req.json().catch(() => ({}));
-  const mode = body.mode === "math" ? "math" : "coding";
+  const mode = body.mode === "math" ? "math" : "cs_quiz";
 
   await connectDB();
-  const user = await User.findOne({ clerkId: userId }).select("rating mathRating").lean();
+  const user = await User.findOne({ clerkId: userId }).select("csQuizRating mathRating").lean();
   if (!user) return NextResponse.json({ error: "Profile not found" }, { status: 404 });
 
   await adminDB.ref(realtimePaths.matchmakingAssignment(userId)).remove();
 
   await adminDB.ref(realtimePaths.matchmakingEntry(userId)).set({
-    rating: (mode === "math" ? user.mathRating : user.rating) ?? 1200,
+    rating: (mode === "math" ? user.mathRating : user.csQuizRating) ?? 1200,
     mode,
     status: "waiting",
     joinedAt: Date.now(),

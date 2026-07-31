@@ -14,7 +14,7 @@ const battleSchema = new Schema(
     room: { type: Schema.Types.ObjectId, ref: "Room", default: null },
     participants: { type: [participantSchema], required: true },
 
-    mode: { type: String, enum: ["1v1", "ranked", "math", "quiz"], default: "1v1" },
+    mode: { type: String, enum: ["1v1", "ranked", "quiz", "math", "cs_quiz"], default: "1v1" },
     questions: { type: [{ type: Schema.Types.ObjectId, ref: "Question" }], default: [] },
 
     status: {

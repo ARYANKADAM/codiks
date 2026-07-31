@@ -15,7 +15,7 @@ const roomSchema = new Schema(
     host: { type: Schema.Types.ObjectId, ref: "User", required: true },
     players: { type: [roomPlayerSchema], default: [] },
 
-    mode: { type: String, enum: ["1v1", "quiz", "math", "ffa"], default: "1v1" },
+    mode: { type: String, enum: ["1v1", "quiz", "math", "cs_quiz", "ffa"], default: "1v1" },
     status: {
       type: String,
       enum: ["waiting", "starting", "in_progress", "completed", "cancelled"],

@@ -1,11 +1,11 @@
 "use client";
 
-import { Code2, Sigma } from "lucide-react";
+import { BrainCircuit, Sigma } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export function DuelModeTabs({ activeMode, onSelect, rating, mathRating }) {
+export function DuelModeTabs({ activeMode, onSelect, csQuizRating, mathRating }) {
   const modes = [
-    { key: "coding", label: "Coding", icon: Code2, subtitle: rating },
+    { key: "cs_quiz", label: "CS Quiz", icon: BrainCircuit, subtitle: csQuizRating },
     { key: "math", label: "Math", icon: Sigma, subtitle: mathRating },
   ];
 
