@@ -1,7 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import { Avatar } from "@/components/shared/avatar";
 import { BannerUpload } from "@/components/profile/banner-upload";
+import { FriendsModal } from "@/components/profile/friends-modal";
 
-export function ProfileHeader({ username, avatarUrl, bannerUrl, memberSince }) {
+export function ProfileHeader({ username, avatarUrl, bannerUrl, memberSince, friendsCount }) {
+  const [isFriendsOpen, setIsFriendsOpen] = useState(false);
+
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-card">
       <div
@@ -25,7 +31,12 @@ export function ProfileHeader({ username, avatarUrl, bannerUrl, memberSince }) {
           Member since{" "}
           {memberSince ? new Date(memberSince).toLocaleDateString(undefined, { month: "long", year: "numeric" }) : "—"}
         </p>
+        <button onClick={() => setIsFriendsOpen(true)} className="mt-2 text-sm font-semibold text-primary hover:underline">
+          {friendsCount} {friendsCount === 1 ? "Friend" : "Friends"}
+        </button>
       </div>
+
+      <FriendsModal isOpen={isFriendsOpen} onClose={() => setIsFriendsOpen(false)} />
     </div>
   );
 }

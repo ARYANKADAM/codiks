@@ -2,7 +2,12 @@ import { currentUser } from "@clerk/nextjs/server";
 import { getDashboardData } from "@/lib/dashboard-service";
 import { StatPills } from "@/components/dashboard/stat-pills";
 import { DuelHub } from "@/components/dashboard/duel-hub";
+import { DailyChallengesCard } from "@/components/dashboard/daily-challenges-card";
+import { DailyQuestPanel } from "@/components/dashboard/daily-quest-panel";
+import { InviteFriendsCard } from "@/components/dashboard/invite-friends-card";
 import { NotificationsBell } from "@/components/layout/notifications-bell";
+import { MessagesLinkMobile } from "@/components/layout/messages-link-mobile";
+import { UserStoriesRow } from "@/components/dashboard/user-stories-row";
 
 export const metadata = { title: "Dashboard" };
 
@@ -15,20 +20,27 @@ export default async function DashboardPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
-        <div>
-          <h1 className="font-display text-3xl uppercase">Arena</h1>
-          <p className="text-sm text-muted-foreground">
-            Welcome back, {clerkUser.firstName || profile?.username}.
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <StatPills dailyStreak={profile?.dailyStreak ?? 0} totalDuels={totalDuels} />
+      <div className="flex items-center justify-between gap-4">
+        <StatPills dailyStreak={profile?.dailyStreak ?? 0} totalDuels={totalDuels} />
+        <div className="hidden lg:block">
           <NotificationsBell />
         </div>
+        <MessagesLinkMobile />
       </div>
 
-      <DuelHub csQuizRating={profile?.csQuizRating ?? 1200} mathRating={profile?.mathRating ?? 1200} />
+      <UserStoriesRow />
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <div className="space-y-6 lg:col-span-2">
+          <DuelHub csQuizRating={profile?.csQuizRating ?? 1200} mathRating={profile?.mathRating ?? 1200} />
+          <DailyChallengesCard />
+        </div>
+
+        <div className="space-y-6">
+          <DailyQuestPanel />
+          <InviteFriendsCard />
+        </div>
+      </div>
     </div>
   );
 }

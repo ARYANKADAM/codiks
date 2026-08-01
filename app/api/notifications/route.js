@@ -17,6 +17,13 @@ export async function GET() {
     Notification.countDocuments({ user: me._id, isRead: false }),
   ]);
 
+  const unreadChatCount = await Notification.countDocuments({
+    user: me._id,
+    type: "system",
+    "metadata.category": "chat_message",
+    isRead: false,
+  });
+
   return NextResponse.json({
     notifications: notifications.map((n) => ({
       id: String(n._id),
@@ -28,5 +35,6 @@ export async function GET() {
       createdAt: n.createdAt,
     })),
     unreadCount,
+    unreadChatCount,
   });
 }

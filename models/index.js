@@ -11,3 +11,6 @@ export { Notification } from "@/models/Notification";
 export { QuizAttempt } from "@/models/QuizAttempt";
 export { MathAttempt } from "@/models/MathAttempt";
 export { CsQuizAttempt } from "@/models/CsQuizAttempt";
+export { Friendship } from "@/models/Friendship";
+export { DailyChallengeProgress } from "@/models/DailyChallengeProgress";
+export { ChatMessage } from "@/models/ChatMessage";

@@ -28,7 +28,7 @@ export function GameRankingCard({ mathRating, csQuizRating }) {
         <select
           value={mode}
           onChange={(e) => setMode(e.target.value)}
-          className="h-10 w-full rounded-lg border border-input bg-background px-3 text-sm font-medium"
+          className="h-10 w-30 rounded-lg border border-input bg-background px-3 text-sm font-medium"
         >
           {Object.entries(MODES).map(([key, m]) => (
             <option key={key} value={key}>
