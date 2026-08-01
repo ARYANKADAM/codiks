@@ -22,6 +22,8 @@ import { ChallengeListener } from "@/components/friends/challenge-listener";
 import { useLiveNotifications } from "@/hooks/use-live-notifications";
 import { BattleResultCard } from "@/components/chat/battle-result-card";
 import { useMatchmaking } from "@/hooks/use-matchmaking";
+import { Suspense} from "react";
+
 
 function formatTime(timestamp) {
   if (!timestamp) return "";
@@ -429,9 +431,10 @@ function ChatShell() {
 export function ChatPage() {
   return (
     <SidebarProvider>
-      <ChatShell />
+      <Suspense fallback={null}>
+        <ChatShell />
+      </Suspense>
     </SidebarProvider>
   );
 }
-
 export default ChatPage;
