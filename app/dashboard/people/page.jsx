@@ -12,7 +12,7 @@ export default async function PeoplePage() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold">All Players</h1>
-        <p className="text-sm text-muted-foreground">Everyone who has joined CodeArena — add friends or challenge whoever's online.</p>
+        <p className="text-sm text-muted-foreground">Everyone who has joined CodeArena.</p>
       </div>
       <PeopleDirectoryClient users={users} />
     </div>

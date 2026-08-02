@@ -27,15 +27,15 @@ export function StoryActionMenu({ user, isOpen, onClose }) {
     }
   }
 
-  function handleViewProfile() {
+ function handleViewProfile() {
     onClose();
-    router.push(`/dashboard/people?highlight=${user.clerkId}`);
+    router.push(`/dashboard/u/${user.clerkId}`);
   }
 
   if (!user) return null;
 
   return (
-    <DialogOverlay isOpen={isOpen} onClose={onClose} labelledBy="story-action-title" closeOnEscape>
+   <DialogOverlay isOpen={isOpen} onClose={onClose} labelledBy="story-action-title" closeOnEscape closeOnOutsideClick>
       <div className="w-full max-w-xs rounded-2xl border border-border bg-card p-5">
         <div className="mb-4 flex flex-col items-center gap-2 text-center">
           <Avatar src={user.avatarUrl} alt={user.username} size="lg" />

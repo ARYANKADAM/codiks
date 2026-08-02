@@ -5,8 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, Trophy, Target, Bell, MoreHorizontal } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useUnreadNotificationsCount } from "@/hooks/use-unread-notifications-count";
-import { useLiveNotifications } from "@/hooks/use-live-notifications";
+import { useNotificationsContext } from "@/components/providers/notifications-provider";
 
 const ITEMS = [
   { title: "Arena", href: "/dashboard", icon: LayoutDashboard },
@@ -17,9 +16,7 @@ const ITEMS = [
 
 export function MobileBottomNav({ onMoreClick }) {
   const pathname = usePathname();
-  const { user } = useUser();
-  const [unreadCount, refresh] = useUnreadNotificationsCount(user?.id);
-  useLiveNotifications(user?.id, refresh);
+  const { unreadCount } = useNotificationsContext();
 
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 flex items-stretch border-t border-border bg-card pb-[env(safe-area-inset-bottom)] lg:hidden">

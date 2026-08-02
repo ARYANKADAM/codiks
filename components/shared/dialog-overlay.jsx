@@ -4,14 +4,13 @@ import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
-export function DialogOverlay({ isOpen, onClose, closeOnEscape = true, labelledBy, children, className = "" }) {
+export function DialogOverlay({ isOpen, onClose, closeOnEscape = true, closeOnOutsideClick = false, labelledBy, children, className = "" }) {
   const containerRef = useRef(null);
   const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     if (!isOpen) return;
     containerRef.current?.focus();
-
     function handleKeyDown(e) {
       if (closeOnEscape && e.key === "Escape") onClose?.();
     }
@@ -31,9 +30,12 @@ export function DialogOverlay({ isOpen, onClose, closeOnEscape = true, labelledB
           aria-labelledby={labelledBy}
           ref={containerRef}
           tabIndex={-1}
+          onClick={closeOnOutsideClick ? onClose : undefined}
           className={`fixed inset-0 z-50 flex flex-col items-center justify-center gap-6 bg-background/95 backdrop-blur-md outline-none ${className}`}
         >
-          {children}
+          <div onClick={(e) => e.stopPropagation()} className="contents">
+            {children}
+          </div>
         </motion.div>
       )}
     </AnimatePresence>

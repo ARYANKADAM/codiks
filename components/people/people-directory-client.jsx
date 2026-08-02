@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { toast } from "sonner";
 import { Check, UserPlus, Clock, Sigma, BrainCircuit } from "lucide-react";
+import Link from "next/link";
 import { Avatar } from "@/components/shared/avatar";
 import { Button } from "@/components/ui/button";
 import { usePresenceList } from "@/hooks/use-presence-list";
@@ -33,28 +34,15 @@ function UserRow({ user, presence }) {
     }
   }
 
-  async function sendChallenge() {
-    try {
-      const res = await fetch("/api/challenges/send", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ targetClerkId: user.clerkId, mode: mode && mode !== "idle" ? mode : "cs_quiz" }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
-      toast.success(`Challenge sent to ${user.username}`);
-    } catch (err) {
-      toast.error(err.message);
-    }
-  }
-
   return (
     <div className="flex items-center gap-3 rounded-lg border border-border p-3">
-      <button onClick={isOnline ? sendChallenge : undefined} disabled={!isOnline} className="disabled:cursor-not-allowed">
+      <Link href={`/dashboard/u/${user.clerkId}`}>
         <Avatar src={user.avatarUrl} alt={user.username} size="md" className={isOnline ? "ring-2 ring-success" : "opacity-60"} />
-      </button>
+      </Link>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-semibold">{user.username}</p>
+        <Link href={`/dashboard/u/${user.clerkId}`} className="truncate text-sm font-semibold hover:underline">
+          {user.username}
+        </Link>
         <p className="flex items-center gap-1 text-xs text-muted-foreground">
           {ModeIcon && <ModeIcon className="size-3" />}
           {isOnline ? (ModeIcon ? "In a duel" : "Online") : "Offline"}
@@ -71,9 +59,7 @@ function UserRow({ user, presence }) {
           <Clock className="size-3" /> Pending
         </span>
       )}
-      {status === "incoming" && (
-        <span className="text-xs font-medium text-primary">Respond in Friends</span>
-      )}
+      {status === "incoming" && <span className="text-xs font-medium text-primary">Respond in Friends</span>}
       {status === "none" && (
         <Button size="sm" variant="outline" onClick={sendRequest}>
           <UserPlus className="size-3" /> Add
@@ -85,7 +71,6 @@ function UserRow({ user, presence }) {
 
 export function PeopleDirectoryClient({ users }) {
   const presenceMap = usePresenceList();
-
   return (
     <div className="grid gap-3 sm:grid-cols-2">
       {users.map((u) => (

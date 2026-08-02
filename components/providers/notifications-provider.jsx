@@ -1,35 +1,44 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { createContext, useContext, useEffect, useRef, useState, useCallback } from "react";
 import { toast } from "sonner";
 import { ref, onChildAdded, off } from "firebase/database";
 import { realtimeDB } from "@/lib/firebase";
 import { realtimePaths } from "@/lib/realtime-paths";
+
+const NotificationsContext = createContext(null);
 
 function getLastSeen(clerkId) {
   if (typeof window === "undefined") return Date.now();
   const stored = window.localStorage.getItem(`notif_last_seen_${clerkId}`);
   return stored ? Number(stored) : Date.now();
 }
-
 function setLastSeen(clerkId, ts) {
   if (typeof window === "undefined") return;
   window.localStorage.setItem(`notif_last_seen_${clerkId}`, String(ts));
 }
 
-/**
- * Toasts new notifications exactly once, ever — a localStorage watermark
- * (not just an in-memory mount timestamp) survives page reloads, so
- * already-seen notifications never replay just because Firebase still
- * holds the node (it never auto-deletes these).
- */
-export function useLiveNotifications(clerkId, onNewNotification) {
+export function NotificationsProvider({ clerkId, children }) {
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [version, setVersion] = useState(0); // bumped on every new event, for consumers like chat inbox to refetch
   const lastSeenRef = useRef(0);
 
+  const refreshUnreadCount = useCallback(() => {
+    if (!clerkId) return;
+    fetch("/api/notifications")
+      .then((r) => r.json())
+      .then((d) => setUnreadCount(d.unreadCount ?? 0))
+      .catch(() => {});
+  }, [clerkId]);
+
+  useEffect(() => {
+    refreshUnreadCount();
+  }, [refreshUnreadCount]);
+
+  // Exactly ONE live listener for the whole app, mounted once here.
   useEffect(() => {
     if (!clerkId) return;
     lastSeenRef.current = getLastSeen(clerkId);
-
     const notifRef = ref(realtimeDB, realtimePaths.userNotifications(clerkId));
 
     const handleChildAdded = (snapshot) => {
@@ -44,12 +53,25 @@ export function useLiveNotifications(clerkId, onNewNotification) {
       } else {
         toast(data.title, { description: data.message });
       }
-      onNewNotification?.();
+      refreshUnreadCount();
+      setVersion((v) => v + 1);
     };
 
     onChildAdded(notifRef, handleChildAdded);
     return () => off(notifRef, "child_added", handleChildAdded);
-  }, [clerkId, onNewNotification]);
+  }, [clerkId, refreshUnreadCount]);
+
+  return (
+    <NotificationsContext.Provider value={{ unreadCount, refreshUnreadCount, version }}>
+      {children}
+    </NotificationsContext.Provider>
+  );
 }
 
-export default useLiveNotifications;
+export function useNotificationsContext() {
+  const ctx = useContext(NotificationsContext);
+  if (!ctx) throw new Error("useNotificationsContext must be used within NotificationsProvider");
+  return ctx;
+}
+
+export default NotificationsProvider;

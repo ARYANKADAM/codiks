@@ -28,15 +28,14 @@ export default async function DashboardPage() {
         <MessagesLinkMobile />
       </div>
 
-      <UserStoriesRow />
-
-      <div className="grid gap-6 lg:grid-cols-3">
-        <div className="space-y-6 lg:col-span-2">
+      <div className="grid items-start gap-6 lg:grid-cols-3">
+        <div className="space-y-4 lg:col-span-2">
+          <UserStoriesRow />
           <DuelHub csQuizRating={profile?.csQuizRating ?? 1200} mathRating={profile?.mathRating ?? 1200} />
           <DailyChallengesCard />
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-4">
           <DailyQuestPanel />
           <InviteFriendsCard />
         </div>
