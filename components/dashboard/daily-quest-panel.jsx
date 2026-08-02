@@ -20,7 +20,7 @@ export function DailyQuestPanel() {
 
   return (
     <Card>
-      <CardHeader className="flex-row items-center justify-between space-y-0">
+      <CardHeader className="flex flex-wrap items-center justify-between gap-2 space-y-0">
         <CardTitle className="text-sm uppercase tracking-wide text-muted-foreground">
           Daily Quest · {countdown}
         </CardTitle>
@@ -31,7 +31,7 @@ export function DailyQuestPanel() {
       <CardContent className="space-y-3 p-4 sm:p-6">
         {topThree.map((c) => (
           <div key={c.key} className="rounded-lg border border-border p-3">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-semibold">{c.title}</p>
               <Button
                 size="sm"

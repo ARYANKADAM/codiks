@@ -50,18 +50,19 @@ function GameRow({ game }) {
   );
 }
 
-export function RecentGamesList() {
+export function RecentGamesList({ clerkId }) {
   const [tab, setTab] = useState("math");
   const [games, setGames] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+useEffect(() => {
     setIsLoading(true);
-    fetch(`/api/profile/recent-games?mode=${tab}`)
+    const qs = new URLSearchParams({ mode: tab, ...(clerkId ? { clerkId } : {}) });
+    fetch(`/api/profile/recent-games?${qs}`)
       .then((r) => r.json())
       .then((d) => setGames(d.games ?? []))
       .finally(() => setIsLoading(false));
-  }, [tab]);
+  }, [tab, clerkId]);
 
   return (
     <Card>

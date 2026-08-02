@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
 import { Notification } from "@/models/Notification";
+import { VISIBLE_NOTIFICATION_TYPES } from "@/lib/notification-visibility";
 
 export async function GET() {
   const { userId } = await auth();
@@ -13,8 +14,8 @@ export async function GET() {
   if (!me) return NextResponse.json({ notifications: [], unreadCount: 0 });
 
   const [notifications, unreadCount] = await Promise.all([
-    Notification.find({ user: me._id }).sort({ createdAt: -1 }).limit(20).lean(),
-    Notification.countDocuments({ user: me._id, isRead: false }),
+    Notification.find({ user: me._id, type: { $in: VISIBLE_NOTIFICATION_TYPES } }).sort({ createdAt: -1 }).limit(20).lean(),
+    Notification.countDocuments({ user: me._id, isRead: false, type: { $in: VISIBLE_NOTIFICATION_TYPES } }),
   ]);
 
   const unreadChatCount = await Notification.countDocuments({

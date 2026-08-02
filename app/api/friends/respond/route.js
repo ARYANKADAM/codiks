@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
 import { Friendship } from "@/models/Friendship";
 import { createNotification } from "@/lib/notification-service";
+import { createNotification } from "@/lib/notification-service";
 
 export async function POST(req) {
   const { userId } = await auth();
@@ -24,6 +25,14 @@ export async function POST(req) {
 
   if (action === "decline") {
     await request.deleteOne();
+    await createNotification({
+      userId: request.requester._id,
+      clerkId: request.requester.clerkId,
+      type: "friend_request",
+      title: "Friend request declined",
+      message: `${me.username} declined your friend request.`,
+      link: "/dashboard/profile",
+    });
     return NextResponse.json({ status: "declined" });
   }
 

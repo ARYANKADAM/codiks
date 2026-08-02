@@ -32,17 +32,37 @@ export function QuickMatchCta({ mode = "cs_quiz" }) {
   return (
     <>
       <Card className="overflow-hidden">
-       <CardContent className="flex flex-col items-start justify-between gap-3 bg-gradient-brand p-4 text-primary-foreground sm:flex-row sm:items-center sm:gap-4 sm:p-6">
-          <div className="min-w-0">
-            <h3 className="text-base font-bold sm:text-lg">{copy.title}</h3>
-            <p className="text-xs opacity-90 sm:text-sm">{copy.description}</p>
+       <CardContent
+className="
+flex
+flex-col
+gap-4
+bg-gradient-brand
+p-4
+text-primary-foreground
+
+sm:flex-row
+sm:items-center
+sm:justify-between
+sm:p-6
+">
+          <div className="flex-1 min-w-0">
+           <h3 className="text-base font-bold leading-tight sm:text-lg">{copy.title}</h3>
+            <p className="mt-1 text-xs leading-relaxed opacity-90 sm:text-sm">{copy.description}</p>
           </div>
           <Button
             size="lg"
             variant="secondary"
             onClick={() => joinQueue(mode).catch((err) => toast.error(err.message))}
             disabled={status === "searching"}
-            className="w-full shrink-0 sm:w-auto"
+           className="
+mt-1
+w-full
+
+sm:mt-0
+sm:w-auto
+sm:min-w-[220px]
+"
           >
             <Icon className="size-4 sm:size-5" />
             {status === "searching" ? "Searching…" : copy.cta}

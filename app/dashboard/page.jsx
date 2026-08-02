@@ -19,8 +19,8 @@ export default async function DashboardPage() {
   const totalDuels = (profile?.mathStats?.totalBattles ?? 0) + (profile?.csQuizStats?.totalBattles ?? 0);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex items-center justify-between gap-2 sm:gap-4">
         <StatPills dailyStreak={profile?.dailyStreak ?? 0} totalDuels={totalDuels} />
         <div className="hidden lg:block">
           <NotificationsBell />
@@ -28,7 +28,7 @@ export default async function DashboardPage() {
         <MessagesLinkMobile />
       </div>
 
-      <div className="grid items-start gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 items-start gap-4 sm:gap-6 lg:grid-cols-3">
         <div className="space-y-4 lg:col-span-2">
           <UserStoriesRow />
           <DuelHub csQuizRating={profile?.csQuizRating ?? 1200} mathRating={profile?.mathRating ?? 1200} />

@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { ref, onChildAdded, off } from "firebase/database";
 import { realtimeDB } from "@/lib/firebase";
 import { realtimePaths } from "@/lib/realtime-paths";
+import { VISIBLE_NOTIFICATION_TYPES } from "@/lib/notification-visibility";
 
 const NotificationsContext = createContext(null);
 
@@ -48,15 +49,17 @@ export function NotificationsProvider({ clerkId, children }) {
       lastSeenRef.current = data.createdAt;
       setLastSeen(clerkId, data.createdAt);
 
-      if (data.type === "streak_updated") {
-        toast(data.title, { description: data.message, icon: "🔥", duration: 4000 });
-      } else {
+      // Only friend-request events toast/count in the bell — everything
+      // else (battle results, streaks, chat) still bumps `version` below
+      // so consumers like the chat inbox and unread badges can react,
+      // just without cluttering the notification panel.
+      if (VISIBLE_NOTIFICATION_TYPES.includes(data.type)) {
         toast(data.title, { description: data.message });
       }
       refreshUnreadCount();
       setVersion((v) => v + 1);
     };
-
+    
     onChildAdded(notifRef, handleChildAdded);
     return () => off(notifRef, "child_added", handleChildAdded);
   }, [clerkId, refreshUnreadCount]);

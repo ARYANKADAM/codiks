@@ -27,7 +27,7 @@ export function DashboardShell({ user, children }) {
           id="main-content"
           className={cn("min-h-screen min-w-0 pb-20 transition-all duration-200 lg:pb-0", isCollapsed ? "lg:pl-16" : "lg:pl-64")}
         >
-          <div className="min-w-0 p-3 sm:p-4 lg:p-6">{children}</div>
+          <div className="mx-auto w-full max-w-7xl min-w-0 p-3 sm:p-4 lg:p-6">{children}</div>
         </main>
         <MobileBottomNav onMoreClick={() => setIsMoreOpen(true)} />
         <MoreSheet isOpen={isMoreOpen} onClose={() => setIsMoreOpen(false)} user={user} />

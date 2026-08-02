@@ -5,10 +5,12 @@ import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
 import { MessageCircle } from "lucide-react";
 import { isThreadUnread } from "@/hooks/use-chat-read-state";
+import { useNotificationsContext } from "@/components/providers/notifications-provider";
 
 export function MessagesFab() {
   const { user } = useUser();
   const [hasUnread, setHasUnread] = useState(false);
+  const { version } = useNotificationsContext();
 
   useEffect(() => {
     if (!user?.id) return;
@@ -19,7 +21,7 @@ export function MessagesFab() {
         setHasUnread(inbox.some((t) => isThreadUnread(t, data?.me?.clerkId)));
       })
       .catch(() => {});
-  }, [user?.id]);
+  }, [user?.id, version]);
 
   return (
     <Link

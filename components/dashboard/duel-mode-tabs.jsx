@@ -10,7 +10,7 @@ export function DuelModeTabs({ activeMode, onSelect, csQuizRating, mathRating })
   ];
 
   return (
-    <div className="flex gap-2 sm:gap-3">
+   <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:gap-3">
       {modes.map((mode) => {
         const isActive = activeMode === mode.key;
         return (
@@ -18,11 +18,11 @@ export function DuelModeTabs({ activeMode, onSelect, csQuizRating, mathRating })
             key={mode.key}
             onClick={() => onSelect(mode.key)}
             className={cn(
-              "flex w-24 shrink-0 cursor-pointer flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all sm:w-28 sm:gap-2 sm:p-4",
-              isActive
-                ? "border-primary bg-primary/10 shadow-[0_0_0_3px_var(--color-primary)_inset]"
-                : "border-border bg-secondary/40 hover:bg-secondary/60"
-            )}
+  "flex flex-1 min-w-0 cursor-pointer flex-col items-center gap-1.5 rounded-xl border-2 p-3 transition-all sm:gap-2 sm:p-4",
+  isActive
+    ? "border-primary bg-primary/10 shadow-[0_0_0_3px_var(--color-primary)_inset]"
+    : "border-border bg-secondary/40 hover:bg-secondary/60"
+)}
           >
             <div className={cn("flex size-8 items-center justify-center rounded-lg sm:size-10", isActive ? "bg-gradient-brand" : "bg-secondary")}>
               <mode.icon className={cn("size-4 sm:size-5", isActive ? "text-primary-foreground" : "text-muted-foreground")} />

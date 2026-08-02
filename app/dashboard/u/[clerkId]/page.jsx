@@ -1,23 +1,23 @@
 import { auth } from "@clerk/nextjs/server";
-import { notFound } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
 import { Friendship } from "@/models/Friendship";
-import { UserProfileView } from "@/components/people/user-profile-view";
+import { getShowcasedAchievements } from "@/lib/achievement-service";
+import { getFriendsData } from "@/lib/friends-service";
+import { ProfileContent } from "@/components/profile/profile-content";
 
 export default async function PublicProfilePage({ params }) {
   const { userId } = await auth();
   const { clerkId } = await params;
-
-  if (clerkId === userId) {
-    const { redirect } = await import("next/navigation");
-    redirect("/dashboard/profile");
-  }
+  if (clerkId === userId) redirect("/dashboard/profile");
 
   await connectDB();
- const [me, target] = await Promise.all([
+  const [me, target] = await Promise.all([
     User.findOne({ clerkId: userId }).select("_id").lean(),
-    User.findOne({ clerkId }).select("clerkId username avatarUrl bannerUrl mathRating csQuizRating mathStats csQuizStats").lean(),
+    User.findOne({ clerkId })
+      .select("clerkId username avatarUrl bannerUrl createdAt mathRating csQuizRating mathStats csQuizStats bestDailyStreak")
+      .lean(),
   ]);
   if (!target) notFound();
 
@@ -26,7 +26,7 @@ export default async function PublicProfilePage({ params }) {
       { requester: me._id, recipient: target._id },
       { requester: target._id, recipient: me._id },
     ],
-  });
+  }).lean();
 
   let friendStatus = "none";
   if (relation) {
@@ -34,18 +34,28 @@ export default async function PublicProfilePage({ params }) {
     else friendStatus = String(relation.requester) === String(me._id) ? "outgoing" : "incoming";
   }
 
+  const [achievements, friendsData] = await Promise.all([
+    getShowcasedAchievements(clerkId),
+    getFriendsData(clerkId),
+  ]);
+
   return (
-    <UserProfileView
-      user={{
-        clerkId: target.clerkId,
-        username: target.username,
-        avatarUrl: target.avatarUrl,
-        bannerUrl: target.bannerUrl,
+    <ProfileContent
+      targetClerkId={target.clerkId}
+      isOwner={false}
+      username={target.username}
+      avatarUrl={target.avatarUrl}
+      bannerUrl={target.bannerUrl}
+      memberSince={target.createdAt}
+      profile={{
         mathRating: target.mathRating,
         csQuizRating: target.csQuizRating,
         mathStats: target.mathStats,
         csQuizStats: target.csQuizStats,
+        bestDailyStreak: target.bestDailyStreak,
       }}
+      achievements={achievements}
+      friendsCount={friendsData.friends.length}
       friendStatus={friendStatus}
       requestId={relation ? String(relation._id) : null}
     />
