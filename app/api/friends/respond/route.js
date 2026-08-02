@@ -4,7 +4,7 @@ import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
 import { Friendship } from "@/models/Friendship";
 import { createNotification } from "@/lib/notification-service";
-import { createNotification } from "@/lib/notification-service";
+
 
 export async function POST(req) {
   const { userId } = await auth();
