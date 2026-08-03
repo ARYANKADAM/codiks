@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "CodeArena",
+  name: "Codiks",
   tagline: "Real-time competitive coding battles.",
   description:
     "Duel other developers live, climb the leaderboard, and sharpen your skills through ranked coding battles and quizzes.",

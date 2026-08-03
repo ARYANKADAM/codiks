@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ThemeToggle } from "@/components/shared/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
+import Image from "next/image";
 
 const navItems = [
   {
@@ -32,20 +33,27 @@ export default function LandingNavbar() {
   return (
     <header className="fixed inset-x-0 top-0 z-50">
       <div className="mx-auto mt-4 max-w-7xl px-4">
-        <div className="glass-panel flex h-16 items-center justify-between rounded-2xl px-6">
+        <div className="glass-panel flex h-16 items-center justify-between rounded-2xl px-2">
 
           {/* Logo */}
 
-          <Link
-            href="/"
-            className="text-2xl font-black tracking-wide text-gradient-brand"
-          >
-            {siteConfig.name}
-          </Link>
+<Link
+  href="/"
+  className="flex items-center"
+>
+  <Image
+    src="/logo.png"
+    alt="Codiks Logo"
+    width={270}
+    height={100}
+    priority
+    className="h-24 w-auto"
+  />
+</Link>
 
           {/* Desktop */}
 
-          <nav className="hidden items-center gap-10 lg:flex">
+          {/* <nav className="hidden items-center gap-10 lg:flex">
             {navItems.map((item) => (
               <Link
                 key={item.label}
@@ -55,7 +63,7 @@ export default function LandingNavbar() {
                 {item.label}
               </Link>
             ))}
-          </nav>
+          </nav> */}
 
           {/* Right */}
 

@@ -39,7 +39,7 @@ export function UserStoriesRow() {
 
   return (
     <>
-   <div className="-mx-4 flex gap-2 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-2 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
+   <div className="-mx-4 flex gap-2 overflow-x-auto overscroll-x-contain scroll-smooth px-4 pb-2 [-webkit-overflow-scrolling:touch] pt-2 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
         <div className="flex w-16 shrink-0 flex-col items-center gap-1.5 text-center">
           <Avatar src={user?.imageUrl} alt="You" size="lg" className="ring-2 ring-primary" />
           <p className="w-full truncate text-[10px] font-semibold">You</p>

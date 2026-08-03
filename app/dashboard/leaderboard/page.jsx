@@ -1,3 +1,4 @@
+// app/dashboard/leaderboard/page.tsx
 import { auth } from "@clerk/nextjs/server";
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
@@ -6,6 +7,20 @@ import { LeaderboardTable } from "@/components/leaderboard/leaderboard-table";
 export const metadata = { title: "Leaderboard" };
 
 const PAGE_SIZE = 50;
+
+function serializeUser(u) {
+  return {
+    clerkId: u.clerkId,
+    username: u.username,
+    avatarUrl: u.avatarUrl,
+    rating: u.rating,
+    stats: {
+      wins: u.stats?.wins ?? 0,
+      losses: u.stats?.losses ?? 0,
+    },
+    rank: u.rank,
+  };
+}
 
 export default async function LeaderboardPage() {
   const { userId } = await auth();
@@ -24,14 +39,14 @@ export default async function LeaderboardPage() {
     const me = await User.findOne({ clerkId: userId }).select("clerkId username avatarUrl rating stats").lean();
     if (me) {
       const higherRatedCount = await User.countDocuments({ rating: { $gt: me.rating } });
-      currentUserEntry = { ...me, rank: higherRatedCount + 1 };
+      currentUserEntry = serializeUser({ ...me, rank: higherRatedCount + 1 });
     }
   }
 
-  const entries = topUsers.map((u, i) => ({ ...u, rank: i + 1 }));
+  const entries = topUsers.map((u, i) => serializeUser({ ...u, rank: i + 1 }));
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-4 py-6 sm:px-6 lg:px-8">
       <div>
         <h1 className="text-2xl font-bold">Leaderboard</h1>
         <p className="text-sm text-muted-foreground">Top {PAGE_SIZE} players by rating, globally.</p>

@@ -12,7 +12,7 @@ export default function GameModes() {
   return (
     <section
       id="modes"
-      className="mx-auto max-w-7xl px-4 py-32"
+      className="mx-auto max-w-7xl px-4 py-20"
     >
 
       <div className="mb-20 text-center">
@@ -39,12 +39,12 @@ export default function GameModes() {
 
       <div className="grid gap-8 lg:grid-cols-2">
 
-        <GameModeCard
+       <GameModeCard
           title="CS Quiz"
           icon={BrainCircuit}
           stats="12,540 Battles"
           description="Race against developers in operating systems, DBMS, networking, OOP, DSA and more."
-          gradient="bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-transparent"
+          gradient="bg-gradient-to-br from-primary/20 via-primary/5 to-transparent"
         />
 
         <GameModeCard
@@ -52,19 +52,19 @@ export default function GameModes() {
           icon={Sigma}
           stats="8,230 Players"
           description="Compete in fast-paced arithmetic, logic and aptitude challenges with live rankings."
-          gradient="bg-gradient-to-br from-cyan-500/20 via-sky-500/10 to-transparent"
+          gradient="bg-gradient-to-br from-accent/20 via-accent/5 to-transparent"
         />
 
         <div className="lg:col-span-2">
 
-          <GameModeCard
+          {/* <GameModeCard
             large
             title="Coding Battles"
             icon={Swords}
             stats="Ranked Matchmaking"
             description="Challenge developers in real-time coding battles, gain ELO, unlock achievements and dominate the leaderboard."
             gradient="bg-gradient-to-br from-pink-500/20 via-violet-500/15 to-transparent"
-          />
+          /> */}
 
         </div>
 

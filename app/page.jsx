@@ -17,7 +17,7 @@ function DesktopLanding() {
 
         <LiveArena />
 
-        <HowItWorks />
+        {/* <HowItWorks /> */}
       </main>
     </div>
   );

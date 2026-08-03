@@ -1,20 +1,20 @@
 export function LeaderboardHero() {
   return (
-    <section className="relative overflow-hidden rounded-3xl  bg- px-8 py-">
+    <section className="relative overflow-hidden rounded-2xl bg-card px-5 py-8 sm:rounded-3xl sm:px-8 sm:py-12">
 
       {/* background glow */}
 
-      
+
       <div className="relative">
 
-        
-        <h1 className="mt-6 font-display text-5xl uppercase sm:text-6xl">
+
+        <h1 className="mt-3 text-center font-display text-3xl uppercase sm:mt-6 sm:text-left sm:text-5xl lg:text-6xl">
 
           Leaderboard
 
         </h1>
 
-       
+
 
       </div>
 

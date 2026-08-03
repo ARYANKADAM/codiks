@@ -96,6 +96,9 @@
   --gradient-brand: linear-gradient(135deg, oklch(0.7 0.19 265), oklch(0.68 0.18 300));
 }
 
+.font-display { font-family: var(--font-display), "Impact", sans-serif; }
+.font-hud { font-family: var(--font-hud), "Arial Narrow", sans-serif; letter-spacing: 0.04em; }
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

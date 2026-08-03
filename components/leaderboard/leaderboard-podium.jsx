@@ -6,9 +6,9 @@ export function LeaderboardPodium({ entries }) {
   const third = entries[2];
 
   return (
-    <section className="py-8">
+    <section className="py-6 sm:py-8">
 
-      <div className="grid items-end gap-6 lg:grid-cols-3">
+      <div className="grid items-stretch gap-4 sm:gap-5 lg:items-end lg:grid-cols-3 lg:gap-6">
 
         <div className="order-2 lg:order-1">
 

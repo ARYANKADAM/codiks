@@ -8,17 +8,17 @@ export function LeaderboardList({
   return (
     <section>
 
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-5 flex items-center justify-between sm:mb-8">
 
         <div>
 
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-xl font-bold sm:text-2xl lg:text-3xl">
 
             Top Players
 
           </h2>
 
-          <p className="text-muted-foreground">
+          <p className="text-sm text-muted-foreground sm:text-base">
 
             Global rankings updated live.
 
@@ -28,7 +28,7 @@ export function LeaderboardList({
 
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-2 sm:space-y-3 lg:space-y-4">
 
         {entries.map((entry) => (
 
@@ -44,9 +44,9 @@ export function LeaderboardList({
 
       {currentUserEntry && (
 
-        <div className="mt-12">
+        <div className="mt-8 sm:mt-10 lg:mt-12">
 
-          <h3 className="mb-4 text-lg font-semibold">
+          <h3 className="mb-3 text-base font-semibold sm:mb-4 sm:text-lg">
 
             Your Position
 

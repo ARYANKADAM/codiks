@@ -4,6 +4,11 @@ import { siteConfig } from "@/config/site";
 import "./globals.css";
 import { SkipLink } from "@/components/shared/skip-link";
 import { Anton } from "next/font/google";
+import { Rajdhani } from "next/font/google";
+
+const anton = Anton({ subsets: ["latin"], weight: "400", variable: "--font-display" });
+const rajdhani = Rajdhani({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-hud" });
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -59,7 +64,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} font-sans`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${displayFont.variable} ${anton.variable} ${rajdhani.variable} font-sans`}>
         <SkipLink />
         <AppProviders>{children}</AppProviders>
       </body>
